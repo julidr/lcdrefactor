@@ -7,10 +7,12 @@ public class ProcesadorIO {
 	private final int espacioDig = 1;
 	
 	private ImpresorLCD impresorLCD;
+	private String resultadoImpresion;
 
 	
 	public ProcesadorIO() {
 		this.impresorLCD = new ImpresorLCD();
+		this.resultadoImpresion = "";
 	}
 	
 	
@@ -62,10 +64,20 @@ public class ProcesadorIO {
         }
         
         // Realiza la impresion del numero
-        impresorLCD.imprimirNumero(size, parametros[1], espacioDig);
+        this.resultadoImpresion = impresorLCD.obtenerResultado(size, parametros[1], espacioDig);
         
 	}
 	
+    /**
+    *
+    * Metodo que devuelve el resultado obtenido como un String
+    *
+    *@return resultadoImpresion String que representa el resultado
+    *de la matriz
+    */ 
+	public String obtenerResultado(){
+		return this.resultadoImpresion;
+	}
 	
     /**
     *
@@ -73,7 +85,7 @@ public class ProcesadorIO {
     *
     * @param cadena Cadena
     */  
-	private boolean isNumeric(String cadena) {
+	public boolean isNumeric(String cadena) {
        try {
            Integer.parseInt(cadena);
            return true;

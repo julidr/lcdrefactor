@@ -25,10 +25,11 @@ public class LCDTester {
                     if(!input.equalsIgnoreCase(CADENA_FINAL)) {
                         listaDeInputs.add(input);
                     }
-                }while (!input.equalsIgnoreCase(CADENA_FINAL)); 
+                }while (!input.equalsIgnoreCase(CADENA_FINAL));
+                
+                lector.close();
             }
             
-
             Iterator<String> iterator = listaDeInputs.iterator();
             while (iterator.hasNext()) {
                 try {
@@ -37,6 +38,7 @@ public class LCDTester {
                     System.out.println("Error: "+ex.getMessage());
                 }
             }
+            System.out.println(procesadorIO.obtenerResultado());
         } catch (Exception ex) {
             System.out.println("Error: "+ex.getMessage());
         }  

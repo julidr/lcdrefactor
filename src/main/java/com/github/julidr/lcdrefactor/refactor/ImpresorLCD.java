@@ -25,6 +25,8 @@ public class ImpresorLCD {
     private int columDig;
     private int totalFilas;
     private int totalColum;
+    
+    private StringBuilder builder;
 
     public ImpresorLCD() {
         // Inicializa los puntos fijos
@@ -33,6 +35,8 @@ public class ImpresorLCD {
         this.pf3 = new int[2];
         this.pf4 = new int[2];
         this.pf5 = new int[2];
+        
+        builder = new StringBuilder();
     }
 
     /**
@@ -45,7 +49,7 @@ public class ImpresorLCD {
      * @param size Tamaño Segmento
      * @param caracter Caracter Segmento
      */    
-    private void adicionarLinea(int[] punto, int size, String caracter) {
+    private void adicionarLinea(int[] punto, String caracter) {
 
         if (caracter.equalsIgnoreCase(CARACTER_HORIZONTAL)) {
             for (int j = 1; j <= size; j++) {
@@ -70,25 +74,25 @@ public class ImpresorLCD {
 
         switch (segmento) {
             case 1:
-                adicionarLinea(this.pf1, this.size, CARACTER_VERTICAL);
+                adicionarLinea(this.pf1, CARACTER_VERTICAL);
                 break;
             case 2:
-                adicionarLinea(this.pf2, this.size, CARACTER_VERTICAL);
+                adicionarLinea(this.pf2, CARACTER_VERTICAL);
                 break;
             case 3:
-                adicionarLinea(this.pf5, this.size, CARACTER_VERTICAL);
+                adicionarLinea(this.pf5, CARACTER_VERTICAL);
                 break;
             case 4:
-                adicionarLinea(this.pf4, this.size, CARACTER_VERTICAL);
+                adicionarLinea(this.pf4, CARACTER_VERTICAL);
                 break;
             case 5:
-                adicionarLinea(this.pf1, this.size, CARACTER_HORIZONTAL);
+                adicionarLinea(this.pf1, CARACTER_HORIZONTAL);
                 break;
             case 6:
-                adicionarLinea(this.pf2, this.size, CARACTER_HORIZONTAL);
+                adicionarLinea(this.pf2, CARACTER_HORIZONTAL);
                 break;
             case 7:
-                adicionarLinea(this.pf3, this.size, CARACTER_HORIZONTAL);
+                adicionarLinea(this.pf3, CARACTER_HORIZONTAL);
                 break;
             default:
                 break;
@@ -251,15 +255,10 @@ public class ImpresorLCD {
 
             //Calcula puntos fijos en su segunda posicion
             this.pf1[1] = 0 + pivotX;
-
             this.pf2[1] = 0 + pivotX;
-
             this.pf3[1] = 0 + pivotX;
-
             this.pf4[1] = (this.filasDig / 2) + pivotX;
-
             this.pf5[1] = (this.columDig - 1) + pivotX;
-
             pivotX = pivotX + this.columDig + espacio;
 
             adicionarDigito(numero);
@@ -276,10 +275,7 @@ public class ImpresorLCD {
      */    
     public void imprimirNumero(int size, String numImp, int espacio) {
         char[] digitos;
-
         this.size = size;
-
-        // Crea el arreglo de digitos
         digitos = numImp.toCharArray();
         
         // Inicializa la matriz en la que se almacenaran los digitos
@@ -288,12 +284,26 @@ public class ImpresorLCD {
         // Realiza el calculo de los valores para los puntos fijos
         calcularPuntosFijos(digitos, espacio);
         
-        // Imprime matriz
-        for (int i = 0; i < this.totalFilas; i++) {
-            for (int j = 0; j < this.totalColum; j++) {
-                System.out.print(this.matrizImpr[i][j]);
-            }
-            System.out.println();
-        }
+    }
+    
+    /**
+    *
+    * Metodo encargado de construir el resultado de la matriz
+    * como un String
+    *
+    * @param size Tamaño Segmento Digitos
+    * @param numImp Numero a Imprimir
+    * @param espacio Espacio Entre digitos
+    * @return String con los resultados de la impresion
+    */  
+    public String obtenerResultado(int size, String numImp, int espacio){
+    	imprimirNumero(size, numImp, espacio);
+    	 for (int i = 0; i < this.totalFilas; i++) {
+             for (int j = 0; j < this.totalColum; j++) {
+            	 builder.append(this.matrizImpr[i][j]);
+             }
+             builder.append("\n");
+         }
+    	return builder.toString();
     }
 }

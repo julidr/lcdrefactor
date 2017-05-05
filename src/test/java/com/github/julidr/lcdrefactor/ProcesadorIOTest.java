@@ -75,5 +75,17 @@ public class ProcesadorIOTest {
 			assertEquals("El parametro size [11] debe estar entre 1 y 10", e.getMessage());
 		}
 	}
+	
+	@Test
+	public void debeRetornarFalsoPorQueElValorIngresadoNoEsUnNumero(){
+		boolean result = procesadorIO.isNumeric("Valar Morghulis");
+		assertFalse(result);
+	}
+	
+	@Test
+	public void debeRetornarTruePorQueElValorIngresadoEsUnNumero(){
+		boolean result = procesadorIO.isNumeric("1855");
+		assertTrue(result);
+	}
 
 }
